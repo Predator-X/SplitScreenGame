@@ -105,11 +105,12 @@ public class PauseMenu : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.Escape)) <---- this before new Input System also work done in PlayerController  if coming back you can delete stuff there  as well
         if(pauseTheGamePressed)
         {
-            if (GameIsPaused)
+            if (!GameIsPaused)
             {
                 Resume();
+                pauseTheGamePressed = false;
             }
-            else
+            else if(GameIsPaused)
             {
                 Pause();
 
@@ -118,10 +119,12 @@ public class PauseMenu : MonoBehaviour
                 if (File.Exists(path))
                 {
                     loadLastCheckpointButton.gameObject.SetActive(true);
+                    pauseTheGamePressed = false;
                 }
                 else if (!File.Exists(path))
                 {
                    loadLastCheckpointButton.gameObject.SetActive(false);
+                    pauseTheGamePressed = false;
                 }
 
             }

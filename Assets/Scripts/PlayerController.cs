@@ -247,19 +247,28 @@ public class PlayerController : Character
     
     void PauseTheGame(InputAction.CallbackContext ctx)
     {
-       // Debug.Log(ctx.ReadValueAsButton()+ "Duration: "+ ctx.duration);
-       
-         if (PauseMenu.pauseTheGamePressed && !ctx.ReadValueAsButton())//&& ctx.ReadValueAsButton())
+        // Debug.Log(ctx.ReadValueAsButton()+ "Duration: "+ ctx.duration);
+        if (PauseMenu.GameIsPaused && !ctx.ReadValueAsButton())
+        {
+            // StartCoroutine( SendMessageToUnPause());
+            PauseMenu.pauseTheGamePressed = true ;
+            PauseMenu.GameIsPaused = false;
+            Debug.Log("check false");
+        }
+     /*    if (PauseMenu.pauseTheGamePressed && !ctx.ReadValueAsButton())//&& ctx.ReadValueAsButton())
         {
             // StartCoroutine( SendMessageToUnPause());
             PauseMenu.pauseTheGamePressed = false;
+            PauseMenu.GameIsPaused = false;
             Debug.Log("check false");
         }
-        else if (!PauseMenu.pauseTheGamePressed && !ctx.ReadValueAsButton())//&& !ctx.ReadValueAsButton())//if(ctx.phase == InputActionPhase.Performed && !PauseMenu.pauseTheGamePressed)/
+     */
+        else if (!PauseMenu.GameIsPaused && !ctx.ReadValueAsButton())//&& !ctx.ReadValueAsButton())//if(ctx.phase == InputActionPhase.Performed && !PauseMenu.pauseTheGamePressed)/
         {
             // SendMessageToPause();
             //  StartCoroutine(SendMessageToPause());
             PauseMenu.pauseTheGamePressed = true;
+            PauseMenu.GameIsPaused = true;
             Debug.Log("check ture");
         }
 

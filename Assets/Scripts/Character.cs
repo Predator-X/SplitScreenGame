@@ -7,9 +7,10 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.InputSystem;
 
 
 public class Character : MonoBehaviour
@@ -64,18 +65,38 @@ public class Character : MonoBehaviour
         currentHealth -= damageAmount;
         Debug.Log("Name: " + gameObject.name + " HasLife: " + currentHealth);
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !this.gameObject.CompareTag("Player"))
         {
         
             isDead = true;
             gameObject.SetActive(false);
 
 
+        }else if(currentHealth <= 0 && this.gameObject.CompareTag("Player"))
+        {
+            isDead = true;
+            PauseMenu.pauseTheGamePressed = true;
+            PauseMenu.GameIsPaused = true;
+            gameObject.GetComponentInChildren<Camera>().gameObject.transform.parent = null;
+            gameObject.SetActive(false);
+            List<GameObject> listEnemys = new List<GameObject>();
+            GameObject[] EnemysArray = GameObject.FindGameObjectsWithTag("Enemy");
+            
+            for(int i=0; i < EnemysArray.Length; i++)
+            {
+                EnemysArray[i].GetComponent<Enemy>().ResetAttack();
+                EnemysArray[i].GetComponent<Enemy>().Patrolling();
+                EnemysArray[i].GetComponent<Enemy>().CheckForSightAndAttackRange();
+            }
+
+           // gameObject.GetComponent<PlayerInput>().enabled = false;
+           
+            
         }
 
     }
 
-
+   
 
   
 // | ABSTRACTION

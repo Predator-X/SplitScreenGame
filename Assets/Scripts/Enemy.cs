@@ -59,36 +59,42 @@ public class Enemy : Character
         Vector3 currentPosition = transform.position;
         foreach (Transform potentialTarget in enemies)
         {
-            Vector3 directionToTarget = potentialTarget.position - currentPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr)
-            {
-                closestDistanceSqr = dSqrToTarget;
-                bestTarget = potentialTarget;
-            }
+                Vector3 directionToTarget = potentialTarget.position - currentPosition;
+                float dSqrToTarget = directionToTarget.sqrMagnitude;
+                if (dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    bestTarget = potentialTarget;
+                }
         }
 
         return bestTarget;
     }
 
-    void Update()
-    {//Check for Sight and Attack Range
+   public void CheckForSightAndAttackRange()
+    {
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, WhatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, WhatIsPlayer);
 
         //Checks Which Players is the Closest And Sets it As Target
-        if(Physics.CheckSphere(transform.position, attackRange, WhatIsPlayer))
+        if (Physics.CheckSphere(transform.position, attackRange, WhatIsPlayer))
         {
-            
-            players = GameObject.FindGameObjectsWithTag("Player");
-          //  Debug.Log(" number of players: " + players.Length);
-            for(int i=0; i <= players.Length-1; i++)
-            {
-                p.Add( players[i].gameObject.transform);
-            }
-            player=GetClosestPlayer(p.ToArray());
-        }
 
+            players = GameObject.FindGameObjectsWithTag("Player");
+            //  Debug.Log(" number of players: " + players.Length);
+            for (int i = 0; i <= players.Length - 1; i++)
+            {
+                p.Add(players[i].gameObject.transform);
+
+            }
+            player = GetClosestPlayer(p.ToArray());
+        }
+    }
+
+    void Update()
+    {//Check for Sight and Attack Range
+
+        CheckForSightAndAttackRange();
 
         //Check distance between two objects
         /*
@@ -173,7 +179,7 @@ public class Enemy : Character
     }
 
 
-    void Patrolling()
+   public void Patrolling()
     {
         if (!walkPointSet) SearchWalkingPoint();
         if (walkPointSet)
@@ -206,7 +212,7 @@ public class Enemy : Character
   
     }
 
-    void ResetAttack()
+  public void ResetAttack()
     {
         alreadyAttacked = false;
     }

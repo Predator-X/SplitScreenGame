@@ -75,6 +75,7 @@ public class SavingAndLoading : MonoBehaviour
         if (thisScene.buildIndex == 1)
         {
             string path = Application.persistentDataPath + "/" + SaveSystem.getUserName() + "player.save";
+          
 
             if (!File.Exists(path))
             {

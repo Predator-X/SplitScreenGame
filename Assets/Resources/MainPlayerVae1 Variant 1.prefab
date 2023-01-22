@@ -39,6 +39,10 @@ PrefabInstance:
       propertyPath: m_Actions
       value: 
       objectReference: {fileID: -944628639613478452, guid: 7bc3d4f8949a3044aa2beffb4765d058, type: 3}
+    - target: {fileID: 2974334986810141896, guid: 8e8ca35993b59be47a36138fd382352a, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8321292741346805912, guid: 8e8ca35993b59be47a36138fd382352a, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
       value: 1.2264875

@@ -24,6 +24,7 @@ public class PauseMenu : MonoBehaviour
 
     public static bool GameIsPaused = false;
     public static bool pauseTheGamePressed = false;
+    public static bool playerHasDied = false;
     public static int numberOfPlayers;
 
     public GameObject pauseMenuUI;
@@ -103,46 +104,74 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.Escape)) <---- this before new Input System also work done in PlayerController  if coming back you can delete stuff there  as well
-        if(pauseTheGamePressed)
-        {
-            if (!GameIsPaused)
-            {
-                Resume();
-                pauseTheGamePressed = false;
-            }
-            else if(GameIsPaused)
-            {
-                Pause();
+        
+         if(pauseTheGamePressed)
+         {
 
-                ////Check if The player Has Checkpoint and set Load last check point Button to correct state
-                string path = Application.persistentDataPath + "/" + SaveSystem.getUserName() + "player.save";
-                if (File.Exists(path))
-                {
-                    loadLastCheckpointButton.gameObject.SetActive(true);
-                    pauseTheGamePressed = false;
-                }
-                else if (!File.Exists(path))
-                {
-                   loadLastCheckpointButton.gameObject.SetActive(false);
-                    pauseTheGamePressed = false;
-                }
+             if (!GameIsPaused)
+             {
+                 Resume();
+                 pauseTheGamePressed = false;
 
-            }
-        }
+             }
+             else if(GameIsPaused)
+             {
+                 Pause();
+
+                 ////Check if The player Has Checkpoint and set Load last check point Button to correct state
+                 string path = Application.persistentDataPath + "/" + SaveSystem.getUserName() + "player.save";
+                 if (File.Exists(path))
+                 {
+                     loadLastCheckpointButton.gameObject.SetActive(true);
+                     pauseTheGamePressed = false;
+
+                 }
+                 else if (!File.Exists(path))
+                 {
+                    loadLastCheckpointButton.gameObject.SetActive(false);
+                     pauseTheGamePressed = false;
+
+                 }
+
+             }
+         }
+       // PauseMenuHandler();
     }
+
 
    public void Resume()
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+       
     }
 
   public void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        GameIsPaused = true;
+     //   GameIsPaused = true;
+        if (playerHasDied) { PlayerHasDied(); }
+        else if (!playerHasDied)
+        {
+            PlayerHasNotDied();
+        }
+           
+    }
+
+    public void PlayerHasDied()
+    {
+        pauseMenuUI.gameObject.transform.Find("ResumeButton").gameObject.SetActive(false);
+        pauseMenuUI.gameObject.transform.Find("SaveButton").gameObject.SetActive(false);
+        pauseMenuUI.gameObject.transform.Find("OnDied").gameObject.transform.GetChild(0).gameObject.SetActive(true);
+    }
+    void PlayerHasNotDied()
+    {
+     
+        pauseMenuUI.gameObject.transform.Find("ResumeButton").gameObject.SetActive(true);
+        pauseMenuUI.gameObject.transform.Find("SaveButton").gameObject.SetActive(true);
+        pauseMenuUI.gameObject.transform.Find("OnDied").gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
     public void EndGamePause()
     {
@@ -430,3 +459,37 @@ Debug.Log("G:/__JSONtest/PlayersScoreListData.json");
     }
 
 */
+
+
+
+
+
+
+
+/*
+   void PauseMenuHandler()
+    {
+        if (GameIsPaused)
+        {
+            Pause();
+
+            ////Check if The player Has Checkpoint and set Load last check point Button to correct state
+            string path = Application.persistentDataPath + "/" + SaveSystem.getUserName() + "player.save";
+            if (File.Exists(path))
+            {
+                loadLastCheckpointButton.gameObject.SetActive(true);
+                
+
+            }
+            else if (!File.Exists(path))
+            {
+                loadLastCheckpointButton.gameObject.SetActive(false);
+               
+
+            }
+        }
+        else if (!GameIsPaused)
+        {
+            Resume();
+        }
+    }*/

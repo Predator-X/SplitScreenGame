@@ -30,7 +30,7 @@ public class PlayerSpawnPointManager : MonoBehaviour
         if(SceneManager.GetActiveScene().buildIndex == 1)//<--------If its In MainMenu 
         {
             playerPrefabForLobby = Resources.Load<GameObject>("MainPlayerVae1 Variant 1 ForPlayer2 Variant");
-            Debug.Log(playerPrefabForLobby.name + "AAAAAAAAAAAAAAA");
+           // Debug.Log(playerPrefabForLobby.name + "AAAAAAAAAAAAAAA");
 
             playerInputManager.playerPrefab= playerPrefabForLobby;
             
@@ -50,7 +50,7 @@ public class PlayerSpawnPointManager : MonoBehaviour
                     holder.transform.rotation = startingPoints[0].rotation;
                     holder.transform.position = this.gameObject.transform.position;
                     
-                    Debug.Log("0!!!!!!!!!!!!!!!!!!!");
+                   // Debug.Log("0!!!!!!!!!!!!!!!!!!!");
                     //Turn Of Scene Camera When Player Is Spawned
                     GameObject.FindGameObjectWithTag("MainCamera").SetActive(false);
                   //  playerInputManager.playerPrefab = playerPrefabForLobby;
@@ -99,7 +99,10 @@ public class PlayerSpawnPointManager : MonoBehaviour
             NumberOfPlayers = playerInputManager.playerCount;
             int i = playerInputManager.playerCount;//<---- As playerCount+1  will print 11
             i++;
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<SavingAndLoading>().numberOfPlayersText.GetComponent<TextMeshProUGUI>().
+            GameObject nOPtext;
+            nOPtext = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SavingAndLoading>().numberOfPlayersText.gameObject;
+            nOPtext.SetActive(true);
+            nOPtext.GetComponent<TextMeshProUGUI>().
                 SetText("Number Of Local Players: " + playerInputManager.playerCount);//i);
             Debug.Log(playerInputManager.playerCount + " s");
 

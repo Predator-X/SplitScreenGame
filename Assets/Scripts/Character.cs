@@ -56,43 +56,55 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         CurrentSpeed = _speed;
-   
+
     }
+
 
 
     public virtual void Damage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        Debug.Log("Name: " + gameObject.name + " HasLife: " + currentHealth);
+       // Debug.Log("Name: " + gameObject.name + " HasLife: " + currentHealth);
 
         if (currentHealth <= 0 && !this.gameObject.CompareTag("Player"))
         {
-        
+
             isDead = true;
             gameObject.SetActive(false);
 
 
-        }else if(currentHealth <= 0 && this.gameObject.CompareTag("Player"))
+        }
+        else if (currentHealth <= 0 && this.gameObject.CompareTag("Player"))
         {
             isDead = true;
+
+
+            //  GameObject.FindGameObjectWithTag("GameManager").gameObject.GetComponent<PauseMenu>().Pause();
             PauseMenu.pauseTheGamePressed = true;
             PauseMenu.GameIsPaused = true;
+            PauseMenu.playerHasDied = true;
             gameObject.GetComponentInChildren<Camera>().gameObject.transform.parent = null;
             gameObject.SetActive(false);
+
             List<GameObject> listEnemys = new List<GameObject>();
             GameObject[] EnemysArray = GameObject.FindGameObjectsWithTag("Enemy");
-            
-            for(int i=0; i < EnemysArray.Length; i++)
+
+            for (int i = 0; i < EnemysArray.Length; i++)
             {
                 EnemysArray[i].GetComponent<Enemy>().ResetAttack();
                 EnemysArray[i].GetComponent<Enemy>().Patrolling();
                 EnemysArray[i].GetComponent<Enemy>().CheckForSightAndAttackRange();
             }
 
-           // gameObject.GetComponent<PlayerInput>().enabled = false;
-           
-            
+            // gameObject.GetComponent<PlayerInput>().enabled = false;
+
+
         }
+        else if (currentHealth > 0 && this.gameObject.CompareTag("Player"))
+        {
+            PauseMenu.playerHasDied = false;
+        }
+
 
     }
 

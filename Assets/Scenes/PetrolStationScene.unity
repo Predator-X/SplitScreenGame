@@ -3230,6 +3230,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 394909066}
     m_Modifications:
+    - target: {fileID: 1440534525444708168, guid: b7864f18d3353f54786f19016e217e3d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440534525444708169, guid: b7864f18d3353f54786f19016e217e3d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1440534525444708170, guid: b7864f18d3353f54786f19016e217e3d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3314,9 +3322,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1440534525444708173, guid: b7864f18d3353f54786f19016e217e3d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1440534525444708182, guid: b7864f18d3353f54786f19016e217e3d, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440534525444708182, guid: b7864f18d3353f54786f19016e217e3d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041510991394325439, guid: b7864f18d3353f54786f19016e217e3d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5041510992800815882, guid: b7864f18d3353f54786f19016e217e3d, type: 3}
       propertyPath: m_AnchoredPosition.y

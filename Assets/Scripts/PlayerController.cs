@@ -60,6 +60,8 @@ public class PlayerController : Character
         inputActionAsset = this.GetComponent<PlayerInput>().actions;
         playerActionMap = inputActionAsset.FindActionMap("Player");
         multiplayerInput = new MultiplayerInput();
+
+        PauseMenu.GameIsPaused = false;
        
     }
 
@@ -77,6 +79,8 @@ public class PlayerController : Character
         onStartGameObjectsInScene = GameObject.FindGameObjectsWithTag("Enemy");
 
         rb = GetComponent<Rigidbody>();
+        
+       
 
     }
 
@@ -193,6 +197,7 @@ public class PlayerController : Character
             attackAndCameraManagmentOnInput();
 
         }
+   
     }
 
     void FixedUpdate()
@@ -204,6 +209,8 @@ public class PlayerController : Character
         }
       
     }
+
+
 
     void Fire(InputAction.CallbackContext ctx)
     {
@@ -247,23 +254,18 @@ public class PlayerController : Character
     
     void PauseTheGame(InputAction.CallbackContext ctx)
     {
+        Debug.Log("1GameIsPaused: " + PauseMenu.GameIsPaused + " pauseTheGamePressed: " + PauseMenu.pauseTheGamePressed);
+
         // Debug.Log(ctx.ReadValueAsButton()+ "Duration: "+ ctx.duration);
-        if (PauseMenu.GameIsPaused && !ctx.ReadValueAsButton())
+        if (PauseMenu.GameIsPaused && !ctx.ReadValueAsButton()) //&& !PauseMenu.pauseTheGamePressed
         {
             // StartCoroutine( SendMessageToUnPause());
             PauseMenu.pauseTheGamePressed = true ;
             PauseMenu.GameIsPaused = false;
             Debug.Log("check false");
         }
-     /*    if (PauseMenu.pauseTheGamePressed && !ctx.ReadValueAsButton())//&& ctx.ReadValueAsButton())
-        {
-            // StartCoroutine( SendMessageToUnPause());
-            PauseMenu.pauseTheGamePressed = false;
-            PauseMenu.GameIsPaused = false;
-            Debug.Log("check false");
-        }
-     */
-        else if (!PauseMenu.GameIsPaused && !ctx.ReadValueAsButton())//&& !ctx.ReadValueAsButton())//if(ctx.phase == InputActionPhase.Performed && !PauseMenu.pauseTheGamePressed)/
+
+        else if (!PauseMenu.GameIsPaused  && !ctx.ReadValueAsButton())//&& !ctx.ReadValueAsButton())//if(ctx.phase == InputActionPhase.Performed && !PauseMenu.pauseTheGamePressed)/
         {
             // SendMessageToPause();
             //  StartCoroutine(SendMessageToPause());
@@ -271,9 +273,10 @@ public class PlayerController : Character
             PauseMenu.GameIsPaused = true;
             Debug.Log("check ture");
         }
-
+      
+            Debug.Log("2GameIsPaused: " + PauseMenu.GameIsPaused + " pauseTheGamePressed: " + PauseMenu.pauseTheGamePressed);
     }
-   
+
 
     /*
 

@@ -209,9 +209,11 @@ public class SavingAndLoading : MonoBehaviour
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
 
     public void Load()
     {
+       
      
         loadDone = false;
         loadingSceen.SetActive(true);
@@ -220,7 +222,11 @@ public class SavingAndLoading : MonoBehaviour
         isLoadingNextLevel = false;
         isSceneFromSaveOrAreadyPlayed = true;
 
+     
+
         StartCoroutine(LoadAsynchronously(SaveSystem.LoadPlayer().sceneIndexx));
+        PauseMenu.pauseTheGamePressed = false;
+        PauseMenu.GameIsPaused = false;
     }
 
     public void StartNewGame()
@@ -308,7 +314,6 @@ public class SavingAndLoading : MonoBehaviour
     IEnumerator LoadAsynchronously(int sceneIdnex)
     {
        
-
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIdnex);
 
 
@@ -363,6 +368,7 @@ public class SavingAndLoading : MonoBehaviour
             loadingSceen.SetActive(false);
     
             Time.timeScale = 1.0f;
+            
 
         }
 

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System.Linq;
 using UnityEngine.InputSystem;
+using TMPro;
 //using TMPro;
 public class SavingAndLoading : MonoBehaviour
 {
@@ -86,12 +87,8 @@ public class SavingAndLoading : MonoBehaviour
             }
             else if (File.Exists(path))
             {
-                
-                    SaveSystem.buttonHolder = GameObject.FindGameObjectWithTag("ContinueButton");
-                    Button continueButton = SaveSystem.buttonHolder.GetComponent<Button>();
-                    continueButton.GetComponent<Image>().color = Color.white;
-                    continueButton.interactable = true;
 
+                ContinueMainMenuUISetUp();
             }
 
 
@@ -110,6 +107,34 @@ public class SavingAndLoading : MonoBehaviour
         }
     }
 
+    public void ContinueMainMenuUISetUp()
+    {
+        string path = Application.persistentDataPath + "/" + SaveSystem.getUserName() + "player.save";
+        if (File.Exists(path))
+        {
+            SaveSystem.buttonHolder = GameObject.FindGameObjectWithTag("ContinueButton");
+            Button continueButton = SaveSystem.buttonHolder.GetComponent<Button>();
+            continueButton.GetComponent<Image>().color = Color.white;
+            continueButton.interactable = true;
+
+            //Swaping buttons postions when player has played the game and has save so it will look more apropiate
+            GameObject startButtonGameObject = GameObject.FindGameObjectWithTag("StartButton").gameObject;//this.gameObject.transform.Find("StartButton").gameObject;
+            RectTransform startButton = startButtonGameObject.GetComponent<RectTransform>();
+            startButtonGameObject.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Start New Campain";
+
+
+            Vector3 continueButtonPositionHolder;
+            continueButtonPositionHolder = startButton.position;
+            startButton.position = SaveSystem.buttonHolder.GetComponent<RectTransform>().position;
+            SaveSystem.buttonHolder.GetComponent<RectTransform>().position = continueButtonPositionHolder;
+            SaveSystem.buttonHolder.GetComponentInChildren<TextMeshProUGUI>().text = "Continue Campain";
+        }
+        else if (!File.Exists(path)) {
+            Debug.LogWarning("SavingAndLoadinScrpit SaveFilePathNot exists" +
+            " possible miss use of ContinueMainMenuUISetUp method or something else");
+        }
+        
+    }
 
 
     public void FindEnemys()
@@ -250,7 +275,8 @@ public class SavingAndLoading : MonoBehaviour
         mainPlayerManekin = GameObject.Find("MainPlayer");
         mainPlayerVariant = GameObject.FindGameObjectWithTag("Player");
         playerInputManager = GameObject.FindGameObjectWithTag("PlayerInputManager");
-        mainPlayerManekin.gameObject.SetActive(false);
+       
+       
        // mainPlayerVariant.gameObject.SetActive(true);
         playerInputManager.gameObject.SetActive(true);
         PlayerInputManager p = new PlayerInputManager();
@@ -260,6 +286,11 @@ public class SavingAndLoading : MonoBehaviour
         // numberOfPlayersText = GameObject.FindGameObjectWithTag("NumberOfPlayersCounterText");
   
             numberOfPlayersText.SetActive(true);
+
+        if (mainPlayerManekin != null)
+        {
+            mainPlayerManekin.gameObject.SetActive(false);
+        }
     }
     //-----------------------------------------------------
 
